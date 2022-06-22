@@ -14,20 +14,92 @@ body {
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: none !important;
 }
 .count {
   position: absolute;
-  top: -3px;
+  top: 0px;
   background: #003e29;
   color: #fff;
   font-weight: 500;
-  font-size: 1.2rem;
-  width: 25px;
-  height: 25px;
+  font-size: 1rem;
+  width: 20px;
+  height: 20px;
   border-bottom-left-radius: 10px;
   border-top-right-radius: 10px;
-  line-height: 25px;
+  line-height: 20px;
   text-align: center;
-  right: 5px;
+  right: 6px;
+}
+.week__deal {
+  box-shadow: 0px 10px 25px rgb(0 0 0 / 10%);
+  border-radius: 5px;
+}
+.products__container {
+  margin-top: -4rem;
+}
+.banner {
+  background-image: linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.02) 50%
+  );
+  padding: 20px;
+}
+.filter_btn {
+  font-weight: 600;
+  text-transform: uppercase;
+  border: 1px solid #003e29;
+  border-radius: 30px;
+}
+.filter_btn svg {
+  width: 1.5rem;
+  margin-right: 10px;
+  color: #003e69;
+}
+.product__infos {
+  padding: 5px;
+}
+.product__title {
+  font-weight: 600;
+  line-height: 1;
+  display: inline-block;
+}
+
+.card.card-body.my-2.products img {
+  width: 50%;
+  aspect-ratio: 1/1;
+}
+.products.card {
+  border: none;
+  border-bottom: 1px solid rgb(236, 236, 236);
+  padding-left: 0;
+  border-radius: 0;
+}
+.ratings {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.ratings svg {
+  width: 1rem;
+  height: 1rem;
+  color: black;
+}
+.watch {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.watch svg {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+.categories span {
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.03rem;
+  color: rgb(196 208 193 / 99%);
 }
