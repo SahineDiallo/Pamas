@@ -5,17 +5,20 @@ import { ShoppingCart } from "@styled-icons/feather/ShoppingCart";
 import NavLogo from "./NavLogo";
 import { User } from "@styled-icons/feather/User/";
 import Link from "next/link";
-import Image from 'next/image';
+import Image from "next/image";
+import SearchNav from "./SearchArea";
+import { Search } from "@styled-icons/feather/Search";
+import { ChevronDown } from "@styled-icons/feather/ChevronDown";
 
 const TopNav = () => {
   return (
     <div>
-      <Nav className="mb-0 mb-md-3">
-        <Link href="/">
-          <NavLogo />
-        </Link>
-        <NavRight>
-          <NavOptions>
+      <Nav className="mb-0 text-white ">
+        {/* <div className="d-none d-lg-block flex-grow-1 mx-2">
+          <SearchNav />
+        </div> */}
+        <div className="nav-left d-flex align-items-center">
+          <NavOptions className="d-none d-md-flex">
             <User />
             <div className="">
               <NavFirstOption>
@@ -24,6 +27,13 @@ const TopNav = () => {
               <NavSecondOption>SignIn Now</NavSecondOption>
             </div>
           </NavOptions>
+          <Search />
+        </div>
+        {/* middle nav */}
+        <NavLogo />
+
+        {/* right nav */}
+        <NavRight>
           <NavOptions>
             <Heart />
             <span className="count d-md-none d-block">0</span>
@@ -57,12 +67,17 @@ const TopNav = () => {
 export default TopNav;
 
 const Nav = styled.div`
-  border-bottom: 1px solid black;
-  border-top: 3px solid #003e29;
+  background: #004f22;
+  // border-bottom: 1px solid black;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 5px 10px 0px;
+  padding: 10px;
+
+  .nav-left svg {
+    width: 2rem;
+    height: 2rem;
+  }
 `;
 
 const NavOptions = styled.div`
@@ -71,27 +86,26 @@ const NavOptions = styled.div`
   padding-left: 1rem;
   position-relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   transition: all ease-in .4s;
   gap: 5px;
     svg {
     height: 1.5rem;
     width: .1.5rem;
     cursor: pointer;
-    margin-top: 15px;
     position: relative;
   }
 
 
-  ::before {
-    content: "";
-    width: 1px;
-    height: 10px;
-    background: black;
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-  }
+  // ::before {
+  //   content: "";
+  //   width: 1px;
+  //   height: 10px;
+  //   background: white;
+  //   position: absolute;
+  //   bottom: -5px;
+  //   left: 0;
+  // }
   @media screen and (min-width:768px) {
     svg {
       width: 2rem;
@@ -100,13 +114,12 @@ const NavOptions = styled.div`
 
     ::before {
       content: "";
-      bottom: 0;
+      bottom: -3px;
     }
   }
 `;
 const NavFirstOption = styled.div`
   line-height: 1;
-  margin-top: 5px;
 `;
 const NavSecondOption = styled.div`
   font-weight: 600;
@@ -116,4 +129,5 @@ const NavSecondOption = styled.div`
 const NavRight = styled.div`
   display: flex;
   align-items: center;
+  justify-content: flex-end;
 `;

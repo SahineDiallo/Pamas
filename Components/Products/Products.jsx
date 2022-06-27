@@ -8,63 +8,67 @@ import Link from "next/link";
 const Products = () => {
   const products = useSelector(selectProducts);
   return (
-    <div className="col p-3 d-flex flex-lg-row flex-column align-items-center justify-content-start">
-      <WeekDeal />
-      <ProductsByCategory>
-        {Object.entries(products).map(
-          (product) =>
-            product && (
-              <div
-                className="card card-body border my-2 w-100"
-                key={product[0]}
-              >
-                <h3>{product[0]}</h3>
-                <div className="d-flex flex-column justify-content-center gap-3">
-                  <div className="d-flex align-items-center justify-content-center gap-3">
-                    <div>
+    <>
+      <div className="py-5 px-2">
+        <h1 className="ff-am position-relative">See Our Last Collection</h1>
+        <div className="collections__parent px-lg-0">
+          {Object.entries(products)
+            .slice(0, 2)
+            .map(
+              (product) =>
+                product && (
+                  <div className="last__collections">
+                    <div className="main__img">
                       <img src={product[1][0]?.images[0]} alt="" />
-                      <span>{product[1][0].title}</span>
                     </div>
-
-                    <div>
+                    <div className="secondary1">
                       <img src={product[1][1]?.images[0]} alt="" />
-                      <span>{product[1][1].title}</span>
+                    </div>
+                    <div className="secondary2">
+                      <img src={product[1][2]?.images[0]} alt="" />
                     </div>
                   </div>
-                  <div className="d-flex align-items-center justify-content-center gap-3">
-                    <div>
-                      <img src={product[1][2]?.images[0]} alt="" />
-                      <span>{product[1][2].title}</span>
-                    </div>
-                    <div>
-                      <img src={product[1][3]?.images[0]} alt="" />
-                      <span>{product[1][3].title}</span>
+                )
+            )}
+        </div>
+      </div>
+      <div className="pb-5 px-2">
+        <h1 className="ff-am position-relative">Shop By Trending & Category</h1>
+        <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 row-cols-xl-4 row-cols-md-3">
+          {Object.entries(products).map(
+            (product) =>
+              product && (
+                <div className="col mb-3">
+                  <div className="card card-body products__parent">
+                    <h3>{product[0]}</h3>
+                    <div className="cat__products">
+                      <div className="img1">
+                        <img src={product[1][0]?.images[0]} alt="" />
+                      </div>
+                      <div className="img2">
+                        <img src={product[1][1]?.images[0]} alt="" />
+                      </div>
+                      <div className="img3">
+                        <img src={product[1][2]?.images[0]} alt="" />
+                      </div>
+                      <div className="img4">
+                        <img src={product[1][3]?.images[0]} alt="" />
+                      </div>
                     </div>
                   </div>
                 </div>
-                <Link
-                  className="text-small my-3 "
-                  href={{
-                    pathname: `/categories/${product[0]}`,
-                    // query: { slug: product[0] },
-                  }}
-                >
-                  See More...
-                </Link>
-              </div>
-            )
-        )}
-      </ProductsByCategory>
-    </div>
+              )
+          )}
+        </div>
+      </div>
+    </>
   );
 };
 
 export default Products;
 
 const ProductsByCategory = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  background: #fafafa;
   .card > div > .d-flex img {
     width: 100%;
     border-radius: 50%;

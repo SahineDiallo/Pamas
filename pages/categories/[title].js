@@ -7,7 +7,7 @@ import SingleProduct from "../../Components/Products/SingleProduct";
 
 const title = ({ category, products }) => {
   return (
-    <div>
+    <div className="container-lg">
       <Navbar />
       <div className="banner">
         <h1>{category.name}</h1>
@@ -23,10 +23,15 @@ const title = ({ category, products }) => {
           Filter Options
         </button>
       </div>
-      <div className="cat__products mx-0 row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 p-2">
-        {products.map((product) => (
-          <SingleProduct product={product} />
-        ))}
+      <div className="d-flex align-items-start">
+        <div class="p-2 d-none flex-column gap-2 d-md-flex filters">
+          <h1>Filters</h1>
+        </div>
+        <div className=" mx-0 row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 p-2">
+          {products.map((product, i) => (
+            <SingleProduct product={product} key={i} />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -37,7 +42,7 @@ export const getStaticPaths = async () => {
     "https://api.escuelajs.co/api/v1/categories"
   );
   const paths = categories.data.map((category) => ({
-    params: { title: category.name },
+    params: { title: category.name.toLowerCase() },
   }));
 
   return {
@@ -50,7 +55,7 @@ export const getStaticProps = async (context) => {
   const title = context.params.title;
   const products = await axios.get("https://api.escuelajs.co/api/v1/products");
   const category_products = products.data.filter(
-    (product) => product.category.name === title.toString()
+    (product) => product.category.name.toLowerCase() === title.toString()
   );
 
   const categories = await axios.get(
@@ -58,9 +63,9 @@ export const getStaticProps = async (context) => {
   );
 
   const category = categories.data.filter(
-    (cat) => cat.name === title.toString()
+    (cat) => cat.name.toLowerCase() === title.toString()
   );
-
+  console.log(products.data);
   return {
     props: {
       category: category[0],

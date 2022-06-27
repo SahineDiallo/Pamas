@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Star } from "@styled-icons/feather/Star";
-import { Heart } from "@styled-icons/feather/Heart";
 
 const SingleProduct = ({ product }) => {
   const sponsored = Math.random() > 0.5;
@@ -13,17 +12,17 @@ const SingleProduct = ({ product }) => {
   return (
     <>
       {!isSSR && (
-        <div className="col p-0">
-          <div className="card card-body my-2 products h-100 w-100">
-            <div className="d-flex align-items-start align-items-md-center flex-md-column justify-content-center">
+        <div className="col mb-2">
+          <div className="card card-body border rounded-2  my-2 products h-100 w-100">
+            <div className="d-flex align-items-start flex-md-column justify-content-center">
               <img
                 src={product.images[0]}
-                className="rounded-circle m-md-auto"
+                className=" m-md-auto w-md-100"
                 alt="product"
               />
               <div className="product__infos p-2">
                 {sponsored && (
-                  <small className="text-uppercase">SPONSORED</small>
+                  <span className="text-uppercase d-block">SPONSORED</span>
                 )}
                 <small className="text-bolder product__title">
                   {product.title}
@@ -48,11 +47,11 @@ const SingleProduct = ({ product }) => {
                     <strong className="h6">MRU</strong>
                   </p>
                 </div>
-                <div className="product__watch float-right">
+                {/* <div className="product__watch float-right">
                   <small className="watch">
                     Watch <Heart />
                   </small>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

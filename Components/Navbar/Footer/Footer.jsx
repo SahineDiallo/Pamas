@@ -8,7 +8,7 @@ import { Mail } from "@styled-icons/feather/Mail";
 
 const Footer = () => {
   return (
-    <FooterContainer className="d-flex justify-content-center flex-column flex-md-row gap-4">
+    <FooterContainer className="mt-4 d-flex justify-content-center flex-column flex-md-row gap-4 justify-content-md-around">
       <FooterInfo>
         <NavLogo />
         <small className="fw-bolder">Got a question? 24/7</small>
