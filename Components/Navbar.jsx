@@ -26,7 +26,7 @@ const Navbar = () => {
     dispatch(hideNav());
   };
   return (
-    <Nav>
+    <Nav className="sticky-top">
       <HiddenMenu className={`${active}`}>
         <div className="wrapper__header">
           <NavLogo />
@@ -38,9 +38,9 @@ const Navbar = () => {
         <SideNav />
       </HiddenMenu>
       <TopNav />
-      <div className="d-lg-none">
+      {/* <div className="d-lg-none">
         <SearchNav />
-      </div>
+      </div> */}
       <BottomNav />
     </Nav>
   );
@@ -48,7 +48,7 @@ const Navbar = () => {
 
 export default Navbar;
 const Nav = styled.div`
-  position: relative;
+  // position: relative;
   div.active {
     transform: translateX(0%) !important;
   }

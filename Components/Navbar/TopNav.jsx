@@ -42,7 +42,7 @@ const TopNav = () => {
                 <small>Watching</small>
               </NavFirstOption>
               <NavSecondOption>
-                23 <small className="text-muted ">items</small>
+                23 <small className="">items</small>
               </NavSecondOption>
             </div>
           </NavOptions>
@@ -67,7 +67,7 @@ const TopNav = () => {
 export default TopNav;
 
 const Nav = styled.div`
-  background: #004f22;
+  background: #008339;
   // border-bottom: 1px solid black;
   display: flex;
   justify-content: space-between;

@@ -22,9 +22,11 @@ const BottomNav = () => {
         <div className="bottom__nav d-md-flex align-items-center gap-4">
           <div onClick={handleShowNav}>
             <Menu />
-            <span className="text-bold ml-2 d-none d-md-inline">
-              Categories
-            </span>
+            
+              <span className="text-bold ml-2 d-none d-md-inline">
+                Categories
+              </span>
+            
           </div>
           <div className="categories flex-grow-1 m-auto d-none d-md-flex align-items-center gap-3">
             <span>Electronics</span>

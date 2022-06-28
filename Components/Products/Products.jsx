@@ -10,7 +10,7 @@ const Products = () => {
   return (
     <>
       <div className="py-5 px-2">
-        <h1 className="ff-am position-relative">See Our Last Collection</h1>
+        <h3 className="ff-am position-relative">See Our Last Collection</h3>
         <div className="collections__parent px-lg-0">
           {Object.entries(products)
             .slice(0, 2)
@@ -33,7 +33,7 @@ const Products = () => {
         </div>
       </div>
       <div className="pb-5 px-2">
-        <h1 className="ff-am position-relative">Shop By Trending & Category</h1>
+        <h3 className="ff-am position-relative">Shop By Trending & Category</h3>
         <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 row-cols-xl-4 row-cols-md-3">
           {Object.entries(products).map(
             (product) =>
