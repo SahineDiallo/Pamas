@@ -7,10 +7,44 @@ const ProductSchema = new mongoose.Schema({
   },
   description: {
     type: String,
+    required: true,
+  },
+  color: {
+    type: String,
+    required: true,
   },
   category: {
     type: String,
     required: true,
+  },
+  subCategory: {
+    type: String,
+  },
+  specifications: {
+    processor: {
+      type: String,
+      required: true,
+    },
+    battery: {
+      type: Number,
+      required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+    },
+    Operating_System: {
+      type: String,
+      required: true,
+    },
+    ram: {
+      type: Number,
+      required: true,
+    },
+    brand: {
+      type: String,
+      required: true,
+    },
   },
   price: {
     type: Number,

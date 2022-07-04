@@ -6,9 +6,12 @@ import Product from "../../models/ProductModel";
 export default async function getProduct(req, res) {
   dbConnect();
   const { method } = req;
-  if (method === "GET") {
-    const products = await Product.find();
-    console.log("Here are the products", products);
-    res.status(200).json({ name: "John Doe" });
+  if (method !== "GET") {
+    return res
+      .status(400)
+      .json({ error: "This route only supports get requests" });
   }
+
+  const products = await Product.find();
+  return res.status(200).json(products);
 }

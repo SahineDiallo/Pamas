@@ -49,7 +49,6 @@ a {
   margin-bottom: 3rem;
   transition: all ease-in-out 0.4s;
   margin-bottom: -5rem;
-  margin-top: 10px;
   border: 1px solid #eaeaea;
 }
 .home__banner .banner__text,
@@ -216,6 +215,9 @@ a {
 .collections__parent {
   border-top: 3px solid #d6d6d6;
 }
+.p_preview {
+  top: 120px !important;
+}
 
 @media screen and (max-width: 640px) {
   .collections__parent {
@@ -342,4 +344,40 @@ span.mr-2.cl-pr::after {
   content: "\232A";
   margin-right: 5px;
   color: black;
+}
+.p_specs.border.p-3 div label {
+  min-width: 200px;
+}
+.bg-white.p-3 label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+label.form-label::after {
+  content: "*";
+  color: red;
+  font-size: 20px;
+}
+.bg-white.p-3 input,
+.bg-white.p-3 select {
+  font-size: 14px;
+  transition: all ease-in 0.4s;
+}
+.bg-white.p-3 h5::after {
+  position: absolute;
+  background: #d1d1d1;
+  width: 60%;
+  height: 2px;
+  content: "";
+  top: 33px;
+  border-radius: 5px;
+  margin-left: 11px;
+}
+.bg-white.p-3 input:focus,
+.bg-white.p-3 select:focus {
+  box-shadow: 0 0 0 2px #39c34b;
+}
+.form-check-input:checked {
+  background-color: #1ec415;
+  border-color: #2cc417;
 }

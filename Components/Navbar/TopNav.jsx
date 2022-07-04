@@ -35,6 +35,11 @@ const TopNav = () => {
         {/* right nav */}
         <NavRight>
           <NavOptions>
+            <Link href="/create-product">
+            <button> add New Product</button>
+            </Link>
+          </NavOptions>
+          <NavOptions>
             <Heart />
             <span className="count d-md-none d-block">0</span>
             <div className="d-md-flex d-none flex-column">
