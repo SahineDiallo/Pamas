@@ -1,6 +1,5 @@
 import React from "react";
 import { selectProducts } from "../../store/slices/ProductSlice";
-import WeekDeal from "./WeekDeal";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Link from "next/link";
@@ -36,9 +35,9 @@ const Products = () => {
         <h3 className="ff-am position-relative">Shop By Trending & Category</h3>
         <div className="row row-cols-1 row-cols-sm-2 row-cols-lg-4 row-cols-xl-4 row-cols-md-3">
           {Object.entries(products).map(
-            (product) =>
+            (product, i) =>
               product && (
-                <div className="col mb-3">
+                <div className="col mb-3" key={i}>
                   <div className="card card-body products__parent">
                     <h3>{product[0]}</h3>
                     <div className="cat__products">

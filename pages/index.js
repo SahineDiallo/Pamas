@@ -64,7 +64,7 @@ export default function Home({ categories, products, weekDeal }) {
           </div>
         </div>
 
-        <div className="products__container container-lg px-0 flex-grow-1">
+        <div className="products__container container-lg flex-grow-1">
           <Products />
         </div>
         <footer>

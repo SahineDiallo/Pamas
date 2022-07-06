@@ -3,6 +3,27 @@ import Navbar from "../Components/Navbar";
 import styled from "styled-components";
 import axios from "axios";
 
+const allInputsAndSelects = (divClass) => {
+  const div = document.querySelector(`.${divClass}`);
+  const inputs = div.getElementsByTagName("input");
+  console.log(inputs);
+  const selects = div.getElementsByTagName("select");
+  return Array.prototype.slice
+    .call(inputs)
+    .concat(Array.prototype.slice.call(selects));
+};
+const disableAll = (divClass) => {
+  const elmts = allInputsAndSelects(divClass);
+  elmts.forEach((el) => {
+    el.setAttribute("disabled", "");
+  });
+};
+const removeDisable = (divClass) => {
+  const elmts = allInputsAndSelects(divClass);
+  elmts.forEach((el) => {
+    el.removeAttribute("disabled");
+  });
+};
 const addProduct = () => {
   const [p_img0, setP_img0] = useState("");
   const [p_img1, setP_img1] = useState("");
@@ -18,14 +39,18 @@ const addProduct = () => {
     if (e.target.value === "Clothes" || e.target.value === "Shoes") {
       document.getElementById("psub_Category").removeAttribute("disabled");
       setCatOptions(subCat.Option1);
-      console.log(showSpecs);
+      disableAll("p_specs");
       setShowSpecs(false);
     } else {
       setCatOptions(subCat.Option2);
       document.getElementById("psub_Category").removeAttribute("disabled");
-      e.target.value === "Computer and Laptop"
-        ? setShowSpecs(true)
-        : setShowSpecs(false);
+      if (e.target.value === "Computer and Laptop") {
+        setShowSpecs(true);
+        removeDisable("p_specs");
+      } else {
+        setShowSpecs(false);
+        disableAll("p_specs");
+      }
     }
     if (e.target.value === "Television" || e.target.value === "Mobile") {
       document.getElementById("psub_Category").setAttribute("disabled", "");
@@ -73,8 +98,8 @@ const addProduct = () => {
       price: parseInt(document.getElementById("pPrice").value),
       category: document.getElementById("pCategory").value,
       color: document.querySelector('input[name="color"]:checked').value,
-      product_specs: dataSpecs,
-      subCat: subCat,
+      specifications: dataSpecs,
+      subCategory: subCat,
     };
     formdata.append("data", JSON.stringify(product_data));
     const config = {
@@ -90,9 +115,9 @@ const addProduct = () => {
         <Navbar />
       </header>
       <div className="container-md">
-        <div className="d-flex align-items-start mt-3">
-          <div className="p-3 col-md-6">
-            <div className="bg-white p-3 position-relative">
+        <div className="d-flex align-items-md-start mt-3 flex-column flex-md-row">
+          <div className="p-md-3 col-md-6 mb-3">
+            <div className="bg-white p-md-3 p-2 position-relative">
               <h5>Add a product</h5>
               <form
                 method="post"
@@ -356,8 +381,8 @@ const addProduct = () => {
               </form>
             </div>
           </div>
-          <div className="p-3 col-md-6 sticky-md-top p_preview">
-            <div className="product-overview bg-white p-3 position-relative">
+          <div className="p-md-3 col-md-6 sticky-md-top p_preview">
+            <div className="product-overview bg-white p-md-3 p-2 position-relative">
               <h5>Product Preivew</h5>
               <ImagePreview>
                 <div className="mainImage">
@@ -389,19 +414,16 @@ const ImagePreview = styled.div`
   grid-template-rows: repeat(3, 1fr);
   grid-gap: 10px;
   grid-template-areas:
+    "subImg0 mainImage mainImage mainImage"
     "subImg1 mainImage mainImage mainImage"
-    "subImg2 mainImage mainImage mainImage"
-    "subImg3 mainImage mainImage mainImage";
+    "subImg2 mainImage mainImage mainImage";
   .mainImage {
     height: 250px;
 
     grid-area: mainImage;
   }
-  .subImg4 {
-    grid-area: subImg4;
-  }
-  .subImg3 {
-    grid-area: subImg3;
+  .subImg0 {
+    grid-area: subImg0;
   }
   .subImg2 {
     grid-area: subImg2;

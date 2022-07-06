@@ -34,10 +34,10 @@ const Logo = styled.div`
 `;
 const LogoName = styled.div`
   margin-left: 7px;
+  margin-top: 4px;
   h1 {
     margin: 0;
-    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-size: clamp(2rem, 2.5vw, 2.5rem);
     color: white;
-    margin-top: 5px;
   }
 `;

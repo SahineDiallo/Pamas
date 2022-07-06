@@ -21,30 +21,12 @@ const ProductSchema = new mongoose.Schema({
     type: String,
   },
   specifications: {
-    processor: {
-      type: String,
-      required: true,
-    },
-    battery: {
-      type: Number,
-      required: true,
-    },
-    status: {
-      type: String,
-      required: true,
-    },
-    Operating_System: {
-      type: String,
-      required: true,
-    },
-    ram: {
-      type: Number,
-      required: true,
-    },
-    brand: {
-      type: String,
-      required: true,
-    },
+    processor: String,
+    battery: Number,
+    status: String,
+    system: String,
+    ram: Number,
+    brand: String,
   },
   price: {
     type: Number,

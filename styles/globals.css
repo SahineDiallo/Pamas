@@ -20,21 +20,10 @@ a {
   color: inherit;
   text-decoration: none !important;
 }
-.count {
-  position: absolute;
-  top: 0px;
-  background: #003e29;
-  color: #fff;
-  font-weight: 500;
-  font-size: 1rem;
-  width: 20px;
-  height: 20px;
-  border-bottom-left-radius: 10px;
-  border-top-right-radius: 10px;
-  line-height: 20px;
-  text-align: center;
-  right: 6px;
+.entire-nav .hidden-menu {
+  transform: translateX(-120%);
 }
+
 .week__deal {
   box-shadow: 0px 10px 25px rgb(0 0 0 / 10%);
   border-radius: 5px;
@@ -358,12 +347,12 @@ label.form-label::after {
   color: red;
   font-size: 20px;
 }
-.bg-white.p-3 input,
-.bg-white.p-3 select {
+.bg-white.p-md-3 input,
+.bg-white.p-md-3 select {
   font-size: 14px;
   transition: all ease-in 0.4s;
 }
-.bg-white.p-3 h5::after {
+/* .bg-white.p-md-3 h5::after {
   position: absolute;
   background: #d1d1d1;
   width: 60%;
@@ -372,12 +361,15 @@ label.form-label::after {
   top: 33px;
   border-radius: 5px;
   margin-left: 11px;
-}
-.bg-white.p-3 input:focus,
-.bg-white.p-3 select:focus {
+} */
+.bg-white.p-md-3 input:focus,
+.bg-white.p-md-3 select:focus {
   box-shadow: 0 0 0 2px #39c34b;
 }
 .form-check-input:checked {
   background-color: #1ec415;
   border-color: #2cc417;
+}
+.login {
+  height: 100vh;
 }

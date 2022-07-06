@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Menu } from "@styled-icons/feather/Menu";
-import { MapPin } from "@styled-icons/feather/MapPin";
 import { useDispatch } from "react-redux";
 import { showNav } from "../../store/slices/navSlice";
 
@@ -14,19 +13,13 @@ const BottomNav = () => {
   };
   return (
     <>
-      <ParentDiv className="justify-content-md-center">
-        <NavFirstOption className="d-flex d-md-none">
-          <MapPin />
-          <small className="">Deliver to mauritania</small>
-        </NavFirstOption>
+      <ParentDiv className="justify-content-md-center d-md-flex d-none">
         <div className="bottom__nav d-md-flex align-items-center gap-4">
           <div onClick={handleShowNav}>
             <Menu />
-            
-              <span className="text-bold ml-2 d-none d-md-inline">
-                Categories
-              </span>
-            
+            <span className="text-bold ml-2 d-none d-md-inline">
+              Categories
+            </span>
           </div>
           <div className="categories flex-grow-1 m-auto d-none d-md-flex align-items-center gap-3">
             <span>Electronics</span>

@@ -1,9 +1,21 @@
 import { useState } from "react";
+import FormInput from "../../Components/FormInput";
 
 const Login = () => {
+  const [values, setValues] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   return (
-    <div>
-      <h1>This ithe login page for now.</h1>
+    <div className="d-flex align-items-center justify-content-center login">
+      <form className="">
+        <FormInput placeholder="placeholder" />
+        <FormInput />
+        <FormInput />
+        <FormInput />
+      </form>
     </div>
   );
 };

@@ -1,22 +1,33 @@
 import React from "react";
 import styled from "styled-components";
 import { Heart } from "@styled-icons/feather/Heart";
-import { ShoppingCart } from "@styled-icons/feather/ShoppingCart";
+import { Plus } from "@styled-icons/feather/Plus";
 import NavLogo from "./NavLogo";
 import { User } from "@styled-icons/feather/User/";
 import Link from "next/link";
-import Image from "next/image";
-import SearchNav from "./SearchArea";
-import { Search } from "@styled-icons/feather/Search";
-import { ChevronDown } from "@styled-icons/feather/ChevronDown";
+import { Menu } from "@styled-icons/heroicons-solid/Menu";
+import { Search } from "@styled-icons/heroicons-solid/Search";
+import { useDispatch } from "react-redux";
+import {
+  showNav,
+  showSearch,
+  hideNav,
+  hideSearch,
+} from "../../store/slices/navSlice";
 
 const TopNav = () => {
+  const dispatch = useDispatch();
+  const handleShowNav = () => {
+    dispatch(hideSearch());
+    window.innerWidth <= 768 && dispatch(showNav());
+  };
+  const handleShowSearch = () => {
+    dispatch(hideNav());
+    window.innerWidth <= 768 && dispatch(showSearch());
+  };
   return (
     <div>
       <Nav className="mb-0 text-white ">
-        {/* <div className="d-none d-lg-block flex-grow-1 mx-2">
-          <SearchNav />
-        </div> */}
         <div className="nav-left d-flex align-items-center">
           <NavOptions className="d-none d-md-flex">
             <User />
@@ -27,21 +38,15 @@ const TopNav = () => {
               <NavSecondOption>SignIn Now</NavSecondOption>
             </div>
           </NavOptions>
-          <Search />
+          <Search onClick={handleShowSearch} />
         </div>
         {/* middle nav */}
         <NavLogo />
 
         {/* right nav */}
         <NavRight>
-          <NavOptions>
-            <Link href="/create-product">
-            <button> add New Product</button>
-            </Link>
-          </NavOptions>
-          <NavOptions>
-            <Heart />
-            <span className="count d-md-none d-block">0</span>
+          <NavOptions onClick={handleShowNav}>
+            <Menu />
             <div className="d-md-flex d-none flex-column">
               <NavFirstOption>
                 <small>Watching</small>
@@ -51,18 +56,19 @@ const TopNav = () => {
               </NavSecondOption>
             </div>
           </NavOptions>
-          <NavOptions>
-            <ShoppingCart />
-            <span className="count">0</span>
-            <div className="d-md-flex d-none flex-column">
-              <NavFirstOption>
-                <small>Cart</small>
-              </NavFirstOption>
-              <NavSecondOption>
-                100<small>MRU</small>
-              </NavSecondOption>
-            </div>
-          </NavOptions>
+          <Link href="/create-product">
+            <NavOptions className="d-none d-md-flex">
+              <Plus />
+              <div className="d-md-flex d-none flex-column">
+                <NavFirstOption>
+                  <small>Add</small>
+                </NavFirstOption>
+                <NavSecondOption>
+                  <small>Product</small>
+                </NavSecondOption>
+              </div>
+            </NavOptions>
+          </Link>
         </NavRight>
       </Nav>
     </div>
@@ -87,7 +93,6 @@ const Nav = styled.div`
 
 const NavOptions = styled.div`
   position: relative;
-  padding-right: 1rem;
   padding-left: 1rem;
   position-relative;
   display: flex;
@@ -95,22 +100,12 @@ const NavOptions = styled.div`
   transition: all ease-in .4s;
   gap: 5px;
     svg {
-    height: 1.5rem;
-    width: .1.5rem;
+    height: 2rem;
+    width: 2rem;
     cursor: pointer;
     position: relative;
   }
 
-
-  // ::before {
-  //   content: "";
-  //   width: 1px;
-  //   height: 10px;
-  //   background: white;
-  //   position: absolute;
-  //   bottom: -5px;
-  //   left: 0;
-  // }
   @media screen and (min-width:768px) {
     svg {
       width: 2rem;

@@ -4,6 +4,7 @@ import multer from "multer";
 import sharp from "sharp";
 import streamifier from "streamifier";
 import cloudinary from "../../utils/Cloudinary";
+import Product from "../../models/ProductModel";
 
 const uploadFile = async (thumbnail) => {
   return new Promise((resolve, reject) => {
@@ -20,9 +21,6 @@ const uploadFile = async (thumbnail) => {
     streamifier.createReadStream(thumbnail.buffer).pipe(stream);
   });
   // Need to identify the images before uploads
-};
-const imagesUrl = () => {
-  return new Promise((resolve, result) => {});
 };
 //multer configuration
 const uploads = multer({
@@ -73,19 +71,31 @@ apiRoute.post(async (req, res) => {
         //get all the fields data
       })
     );
+    const product_data = JSON.parse(req.body.data);
+    product_data["images"] = imagesUrl;
     console.log(imagesUrl);
-    const { name, description, price, category, subCat, color, product_specs } =
-      JSON.parse(req.body.data);
+    const {
+      name,
+      description,
+      price,
+      category,
+      subCategory,
+      color,
+      specifications,
+      images,
+    } = product_data;
     console.log(
       name,
       description,
       price,
       category,
-      subCat,
+      subCategory,
       color,
-      product_specs
+      specifications,
+      images
     );
-
+    const created_product = await Product.create(product_data);
+    console.log("this is the created product", created_product);
     return res.status(200).json({ data: "success" });
   } catch (error) {
     console.log("error from sharp images", error);
