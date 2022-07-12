@@ -29,15 +29,17 @@ const TopNav = () => {
     <div>
       <Nav className="mb-0 text-white ">
         <div className="nav-left d-flex align-items-center">
-          <NavOptions className="d-none d-md-flex">
-            <User />
-            <div className="">
-              <NavFirstOption>
-                <small>Hello</small>
-              </NavFirstOption>
-              <NavSecondOption>SignIn Now</NavSecondOption>
-            </div>
-          </NavOptions>
+          <Link href="/accounts/login">
+            <NavOptions className="d-none d-md-flex">
+              <User />
+              <div className="">
+                <NavFirstOption>
+                  <small>Hello</small>
+                </NavFirstOption>
+                <NavSecondOption>SignIn Now</NavSecondOption>
+              </div>
+            </NavOptions>
+          </Link>
           <Search onClick={handleShowSearch} />
         </div>
         {/* middle nav */}
@@ -57,7 +59,7 @@ const TopNav = () => {
             </div>
           </NavOptions>
           <Link href="/create-product">
-            <NavOptions className="d-none d-md-flex">
+            <NavOptions className="d-none d-md-flex cursor-pointer">
               <Plus />
               <div className="d-md-flex d-none flex-column">
                 <NavFirstOption>
@@ -93,6 +95,7 @@ const Nav = styled.div`
 
 const NavOptions = styled.div`
   position: relative;
+  cursor: pointer;
   padding-left: 1rem;
   position-relative;
   display: flex;

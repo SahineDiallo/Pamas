@@ -1,25 +1,47 @@
-import React from "react";
 import { useState } from "react";
 import FormInput from "../../Components/FormInput";
 import Navbar from "../../Components/Navbar";
 import Link from "next/link";
 
-const login = () => {
+const Register = () => {
   const [values, setValues] = useState({
-    phone: "",
+    username: "",
+    "phone number": "",
+    email: "",
     password: "",
+    confirmPassword: "",
   });
   const inputs = [
     {
       id: 1,
-      name: "phone",
-      placeholder: "Enter a phone number",
-      type: "number",
-      label: "Phone Number",
-      errorMessage: "Please enter a valid number",
+      name: "username",
+      placeholder: "Enter your username",
+      type: "text",
+      label: "Username",
+      pattern: "^[A-Za-z0-9]{8,}$",
+      errorMessage:
+        "Username should be more than 8 Characters without spaces or special characters",
     },
     {
       id: 2,
+      name: "email",
+      placeholder: "Enter your email",
+      type: "email",
+      label: "Email",
+      pattern: `^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$`,
+      errorMessage: "Please enter a valid email address",
+    },
+    {
+      id: 3,
+      name: "phone number",
+      placeholder: "Enter a phone number",
+      type: "number",
+      label: "Phone Number",
+      pattern: "^[A-Za-z0-9]{8,}$",
+      errorMessage: "Please enter a valid number",
+    },
+    {
+      id: 4,
       name: "password",
       placeholder: "Enter a password",
       type: "password",
@@ -27,10 +49,18 @@ const login = () => {
       pattern: "^[A-Za-z0-9]{8,}$",
       errorMessage: "Password  must be more than 8 characters",
     },
+    {
+      id: 5,
+      name: "confirm password",
+      placeholder: "Re-enter your password",
+      type: "password",
+      pattern: values.password,
+      label: "Confirm Password",
+      errorMessage: "Passwords must match",
+    },
   ];
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
   };
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
@@ -48,12 +78,12 @@ const login = () => {
               key={input.id}
             />
           ))}
-          <button className="btn btn-success mt-3">Login</button>
+          <button className="btn btn-success mt-3">Register Now</button>
         </form>
         <div className="border-top d-flex align-items-center justify-content-between w-100 p-2 mt-3">
-          <div className="text-muted small">Need an account?</div>
-          <Link href="/accounts/register">
-            <button className="btn-outline-success btn">Register Now</button>
+          <div className="text-muted small">Already have an account</div>
+          <Link href="/accounts/login">
+            <button className="btn-outline-success btn">Login</button>
           </Link>
         </div>
       </div>
@@ -61,4 +91,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Register;

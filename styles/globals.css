@@ -23,6 +23,14 @@ a {
 .entire-nav .hidden-menu {
   transform: translateX(-120%);
 }
+#page-mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: rgba(0,0,0,0.6);
+}
 
 .week__deal {
   box-shadow: 0px 10px 25px rgb(0 0 0 / 10%);
@@ -372,4 +380,18 @@ label.form-label::after {
 }
 .login {
   height: 100vh;
+}
+
+.re-input input ~ span {
+  font-size: 14px;
+  display:none;
+}
+input {
+  font-size: 15px;
+}
+.re-input input:invalid[focused="true"] {
+  border-color: rgb(220, 53, 69);
+}
+.re-input input:invalid[focused="true"] ~ span {
+  display: block;
 }

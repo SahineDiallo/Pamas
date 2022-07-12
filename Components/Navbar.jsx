@@ -5,7 +5,12 @@ import TopNav from "../Components/Navbar/TopNav";
 import { XCircle } from "@styled-icons/feather/XCircle";
 import NavLogo from "../Components/Navbar/NavLogo";
 import { Search } from "@styled-icons/heroicons-solid/Search";
-import { selectNav, hideNav, hideSearch, selectSearch } from "../store/slices/navSlice";
+import {
+  selectNav,
+  hideNav,
+  hideSearch,
+  selectSearch,
+} from "../store/slices/navSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { CubeTransparent } from "@styled-icons/heroicons-outline/CubeTransparent";
 import SideNav from "./Navbar/SideNav/SideNav";
