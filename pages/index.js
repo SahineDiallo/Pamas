@@ -1,10 +1,10 @@
 import Head from "next/head";
-import CarouselDiv from "../Components/Carousel";
 import Navbar from "../Components/Navbar";
 import axios from "axios";
 import Products from "../Components/Products/Products";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 import {
   setCategories,
   setProducts,
@@ -15,6 +15,8 @@ import Footer from "../Components/Navbar/Footer/Footer";
 
 export default function Home({ categories, products, weekDeal }) {
   const dispatch = useDispatch();
+  const { data: session } = useSession();
+  console.log(session);
   useEffect(() => {
     dispatch(setWeekDeal(weekDeal));
     dispatch(setProducts(products));

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@next-auth/mongodb-adapter": "^1.0.3",
     "@reduxjs/toolkit": "^1.8.2",
     "@styled-icons/feather": "^10.34.0",
     "@styled-icons/heroicons-outline": "^10.36.0",
@@ -20,6 +21,7 @@
     "mongoose": "^6.4.0",
     "multer": "^1.4.5-lts.1",
     "next": "12.1.6",
+    "next-auth": "^4.9.0",
     "next-connect": "^0.12.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",

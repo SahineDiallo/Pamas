@@ -2,9 +2,17 @@ import React from "react";
 import { useState } from "react";
 import FormInput from "../../Components/FormInput";
 import Navbar from "../../Components/Navbar";
+import { getProviders } from "next-auth/react";
 import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react";
 
-const login = () => {
+const login = ({ providers }) => {
+  const { data: session } = useSession();
+  console.log("session data", session);
+  if (session) {
+    console.log(session);
+    console.log("ok there is a session");
+  }
   const [values, setValues] = useState({
     phone: "",
     password: "",
@@ -56,9 +64,34 @@ const login = () => {
             <button className="btn-outline-success btn">Register Now</button>
           </Link>
         </div>
+        <div className="d-grid gap-2">
+          {Object.values(providers).map((provider) => (
+            <button
+              className="btn btn-primary btn-outline"
+              type="button"
+              key={provider.id}
+              onClick={() => {
+                signIn(provider.id, {
+                  callbackUrl: `${window.location.origin}`,
+                });
+              }}
+            >
+              {provider.name}
+            </button>
+          ))}
+        </div>
       </div>
     </>
   );
 };
 
 export default login;
+
+export const getServerSideProps = async () => {
+  const providers = await getProviders();
+  return {
+    props: {
+      providers,
+    },
+  };
+};
