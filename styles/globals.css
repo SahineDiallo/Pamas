@@ -20,25 +20,15 @@ a {
   color: inherit;
   text-decoration: none !important;
 }
-.entire-nav .hidden-menu {
-  transform: translateX(-120%);
-}
 #page-mask {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
   top: 0;
-  background-color: rgba(0,0,0,0.6);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
-.week__deal {
-  box-shadow: 0px 10px 25px rgb(0 0 0 / 10%);
-  border-radius: 5px;
-}
-.carousel.carousel-slider {
-  max-height: 350px;
-}
 /* .ff-am {
   font-family: "Arima Madurai";
 } */
@@ -381,10 +371,12 @@ label.form-label::after {
 .login {
   height: 100vh;
 }
-
+.ff-am {
+  color: #e4611b;
+}
 .re-input input ~ span {
   font-size: 14px;
-  display:none;
+  display: none;
 }
 input {
   font-size: 15px;
@@ -394,4 +386,169 @@ input {
 }
 .re-input input:invalid[focused="true"] ~ span {
   display: block;
+}
+#page-mask {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  display: none;
+}
+.profile {
+  position: fixed;
+  top: 65px;
+  background: #fff;
+  height: calc(100vh - 65px);
+  left: 0;
+  width: 350px;
+  z-index: 99;
+  transition: all 0.3s ease;
+  transform: translateX(-100%);
+}
+.profile.show,
+.menu.show,
+.searchDiv.show {
+  transform: translateX(0%);
+}
+.wrapper__header {
+  color: white;
+  box-shadow: 0px 5px 20px rgb(0 0 0 / 10%);
+  padding-right: 10px;
+  padding-left: 10px;
+  height: 3.5rem;
+  background: #e4611b;
+  line-height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.wrapper__header .close_x svg {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.wrapper__header svg {
+  height: 2.5rem;
+}
+
+.close_x {
+  cursor: pointer;
+}
+.list-group,
+.slide_menu {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+  border-radius: 0.25rem;
+}
+.slide_menu_item:first-child {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+
+.slide_menu_item {
+  position: relative;
+  display: block;
+  padding: 0.5rem 1rem;
+  color: #212529;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  color: #008339 !important;
+}
+.slide_menu_item svg {
+  height: 1.5rem;
+  margin-right: 10px;
+}
+.slide_menu_item + .slide_menu_item,
+li + li > .slide_menu_item {
+  border-top-width: 0;
+}
+.navbar.navbar-light {
+  border-bottom: 3px solid #008339;
+}
+.navbar-light .nav > li > a {
+  color: #008339;
+}
+.nav-link:hover,
+.navbar-light .nav > li > a:hover {
+  color: #e4611b !important;
+}
+.dropdown-menu {
+  position: absolute;
+  z-index: 1000;
+  display: none;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+  margin: 0;
+  font-size: 1rem;
+  color: #212529;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0.25rem;
+}
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+.navbar {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.list-group-item.active,
+.active.slide_menu_item {
+  z-index: 2;
+  color: #fff;
+  background-color: #008339 !important;
+  border-color: #008339 !important;
+}
+.list-group {
+  margin-bottom: 0;
+}
+.list-group > .list-group > .list-group-item {
+  padding-left: 30px;
+}
+a[data-bs-toggle="collapse"]:not(.collapsed) {
+  font-weight: bold;
+  background-color: #eceff1;
+}
+
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  margin-bottom: 20px;
+}
+.panel .panel-heading {
+  padding: 0.5rem 1rem;
+  margin-bottom: 0;
+  /* background-color: rgba(0, 0, 0, 0.03); */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+header:first-child,
+.panel .panel-heading:first-child {
+  border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+}
+.panel .panel-body {
+  flex: 1 1 auto;
+  padding: 1rem;
+}
+.form-label {
+  margin-bottom: .5rem;
+  font-size: 14px;
 }

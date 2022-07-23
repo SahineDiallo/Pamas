@@ -9,16 +9,27 @@ import { LogOut } from "@styled-icons/feather/LogOut";
 import { UserPlus } from "@styled-icons/feather/UserPlus";
 import { Plus } from "@styled-icons/heroicons-solid/Plus";
 import Link from "next/link";
+import { useSession, signOut } from "next-auth/react";
 
 const SideNav = () => {
+  const { data: session } = useSession();
   return (
     <SideContainer>
       <SectionNav>
         <h3>Account</h3>
-        <p>
-          <LogIn />
-          Login
-        </p>
+        {session ? (
+          <p onClick={() => signOut()} className="cursor-pointer">
+            <LogOut />
+            Logout
+          </p>
+        ) : (
+          <Link href="/accounts/login">
+            <p>
+              <LogIn />
+              Login
+            </p>
+          </Link>
+        )}
         <p>
           <UserPlus />
           Register
@@ -32,21 +43,31 @@ const SideNav = () => {
       </SectionNav>
       <SectionNav className="flex-grow-1">
         <h3>Store</h3>
-        <ul className="list-unstyled d-flex flex-column gap-3 justify-content-center">
+        <ul className="list-unstyled slide_menu d-flex flex-column  justify-content-center">
           <li>
-            <a href="">SmartPhones</a>
+            <a className="slide_menu_item" href="">
+              SmartPhones
+            </a>
           </li>
           <li>
-            <a href="">Computers & Laptops</a>
+            <a className="slide_menu_item" href="">
+              Computers & Laptops
+            </a>
           </li>
           <li>
-            <a href="">Accessories</a>
+            <a className="slide_menu_item" href="">
+              Accessories
+            </a>
           </li>
           <li>
-            <a href="">Electronics</a>
+            <a className="slide_menu_item" href="">
+              Electronics
+            </a>
           </li>
           <li>
-            <a href="">Shoes</a>
+            <a className="slide_menu_item" href="">
+              Shoes
+            </a>
           </li>
         </ul>
       </SectionNav>
@@ -99,14 +120,15 @@ const SectionNav = styled.div`
     font-size: 14px;
     color: black;
     position: relative;
-    padding: 0 15px;
+    display: flex;
+    align-items: center;
   }
   ul li a::before {
     content: "▶";
     color: #e4611b;
     display: block;
     position: absolute;
-    top: 0px;
+  left: 5px;
     font-size: 12px;
 `;
 const SideContainer = styled.div`

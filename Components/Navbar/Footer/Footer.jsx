@@ -41,8 +41,11 @@ const Footer = () => {
 export default Footer;
 
 const FooterContainer = styled.div`
-  background: #f9f9f9;
   padding: 2rem;
+  background: #008339;
+  padding: 2rem;
+  color: #fff;
+  border-top: 3px solid #e4611b;
 `;
 
 const FooterInfo = styled.div`

@@ -39,5 +39,6 @@ const LogoName = styled.div`
     margin: 0;
     font-size: clamp(2rem, 2.5vw, 2.5rem);
     color: white;
+    line-height: 1;
   }
 `;

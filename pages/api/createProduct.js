@@ -5,22 +5,25 @@ import sharp from "sharp";
 import streamifier from "streamifier";
 import cloudinary from "../../utils/Cloudinary";
 import Product from "../../models/ProductModel";
+import validate from "./_middleware/middleware";
+import { getSession } from "next-auth/react";
 
 const uploadFile = async (thumbnail) => {
-  return new Promise((resolve, reject) => {
-    let stream = cloudinary.uploader.upload_stream((error, result) => {
-      if (result) {
-        const { secure_url } = result;
-        resolve(secure_url);
-      } else {
-        console.log("we got an error error", error);
-        reject(error);
-      }
-    });
+  // return new Promise((resolve, reject) => {
+  //   let stream = cloudinary.uploader.upload_stream((error, result) => {
+  //     if (result) {
+  //       const { secure_url } = result;
+  //       resolve(secure_url);
+  //     } else {
+  //       console.log("we got an error error", error);
+  //       reject(error);
+  //     }
+  //   });
 
-    streamifier.createReadStream(thumbnail.buffer).pipe(stream);
-  });
+  //   streamifier.createReadStream(thumbnail.buffer).pipe(stream);
+  // });
   // Need to identify the images before uploads
+  return "new url";
 };
 //multer configuration
 const uploads = multer({
@@ -29,9 +32,9 @@ const uploads = multer({
 
 const apiRoute = nextConnect({
   onError(error, req, res) {
-    return res
-      .status(501)
-      .json({ error: `Sorry something Happened! ${error.message}` });
+    return res.status(501).json({
+      error: `Sorry, something wrong Happened! Please try later ${error.message}`,
+    });
   },
   // Handle any other HTTP method
   onNoMatch(req, res) {
@@ -41,13 +44,15 @@ const apiRoute = nextConnect({
   },
 });
 const uploadMiddleware = uploads.fields([
-  { name: "p_mainImag", maxCount: 1 },
-  { name: "p_img0", maxCount: 1 },
-  { name: "p_img1", maxCount: 1 },
-  { name: "p_img2", maxCount: 1 },
+  { name: "images.0._value", maxCount: 1 },
+  { name: "images.1._value", maxCount: 1 },
+  { name: "images.2._value", maxCount: 1 },
+  { name: "images.3._value", maxCount: 1 },
 ]);
 // Adds the middleware to Next-Connect
 apiRoute.use(uploadMiddleware);
+apiRoute.use(validate);
+
 // Process a POST request
 apiRoute.post(async (req, res) => {
   dbConnect();
@@ -68,12 +73,13 @@ apiRoute.post(async (req, res) => {
         };
         const secure_url = await uploadFile(thumbnail);
         imagesUrl.push(secure_url);
-        //get all the fields data
       })
     );
     const product_data = JSON.parse(req.body.data);
     product_data["images"] = imagesUrl;
-    console.log(imagesUrl);
+
+    //get the current user
+
     const {
       name,
       description,
@@ -84,24 +90,13 @@ apiRoute.post(async (req, res) => {
       specifications,
       images,
     } = product_data;
-    console.log(
-      name,
-      description,
-      price,
-      category,
-      subCategory,
-      color,
-      specifications,
-      images
-    );
+
     const created_product = await Product.create(product_data);
-    console.log("this is the created product", created_product);
-    return res.status(200).json({ data: "success" });
+    return res.status(200).json({ data: "success", product: created_product });
   } catch (error) {
     console.log("error from sharp images", error);
   }
 });
-
 export default apiRoute;
 export const config = {
   api: {

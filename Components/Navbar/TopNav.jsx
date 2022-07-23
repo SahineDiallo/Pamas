@@ -1,77 +1,98 @@
 import React from "react";
 import styled from "styled-components";
-import { Heart } from "@styled-icons/feather/Heart";
-import { Plus } from "@styled-icons/feather/Plus";
+import { Plus } from "@styled-icons/heroicons-solid/Plus";
 import NavLogo from "./NavLogo";
-import { User } from "@styled-icons/feather/User/";
+import { User } from "@styled-icons/heroicons-solid/User/";
 import Link from "next/link";
-import { Menu } from "@styled-icons/heroicons-solid/Menu";
+import { MenuAlt1 } from "@styled-icons/heroicons-solid/MenuAlt1";
 import { Search } from "@styled-icons/heroicons-solid/Search";
-import { useDispatch } from "react-redux";
-import {
-  showNav,
-  showSearch,
-  hideNav,
-  hideSearch,
-} from "../../store/slices/navSlice";
+import { useSession } from "next-auth/react";
 
+const showMask = () => {
+  const mask = document.getElementById("page-mask");
+  mask.classList.add("d-block");
+};
 const TopNav = () => {
-  const dispatch = useDispatch();
+  const { data: session } = useSession();
   const handleShowNav = () => {
-    dispatch(hideSearch());
-    window.innerWidth <= 768 && dispatch(showNav());
+    const div = document.getElementById("menu");
+    const p_div = document.getElementById("profile");
+    const s_div = document.getElementById("searchDiv");
+    p_div.classList.contains("show") && p_div.classList.remove("show");
+    s_div.classList.contains("show") && s_div.classList.remove("show");
+    div.classList.add("show");
+    showMask();
   };
   const handleShowSearch = () => {
-    dispatch(hideNav());
-    window.innerWidth <= 768 && dispatch(showSearch());
+    const s_div = document.getElementById("searchDiv");
+    const m_div = document.getElementById("menu");
+    const p_div = document.getElementById("profile");
+    m_div.classList.contains("show") && m_div.classList.remove("show");
+    p_div.classList.contains("show") && p_div.classList.remove("show");
+    s_div.classList.add("show");
+    showMask();
+  };
+  const handleShowProfile = () => {
+    const p_div = document.getElementById("profile");
+    const m_div = document.getElementById("menu");
+    const s_div = document.getElementById("searchDiv");
+    m_div.classList.contains("show") && m_div.classList.remove("show");
+    s_div.classList.contains("show") && s_div.classList.remove("show");
+    p_div.classList.add("show");
+    showMask();
   };
   return (
     <div>
-      <Nav className="mb-0 text-white ">
-        <div className="nav-left d-flex align-items-center">
-          <Link href="/accounts/login">
-            <NavOptions className="d-none d-md-flex">
-              <User />
-              <div className="">
-                <NavFirstOption>
-                  <small>Hello</small>
-                </NavFirstOption>
-                <NavSecondOption>SignIn Now</NavSecondOption>
-              </div>
-            </NavOptions>
-          </Link>
-          <Search onClick={handleShowSearch} />
-        </div>
-        {/* middle nav */}
-        <NavLogo />
-
-        {/* right nav */}
-        <NavRight>
-          <NavOptions onClick={handleShowNav}>
-            <Menu />
-            <div className="d-md-flex d-none flex-column">
+      <Nav className="mb-0 text-white row mx-0">
+        <div className="nav-left d-flex align-items-center col-4">
+          <NavOptions className="d-none d-md-flex" onClick={handleShowProfile}>
+            <User />
+            <div className="ml-3">
               <NavFirstOption>
-                <small>Watching</small>
+                <small>Hello</small>
               </NavFirstOption>
               <NavSecondOption>
-                23 <small className="">items</small>
+                {session ? session.user.name : "SignIn Now"}
               </NavSecondOption>
             </div>
           </NavOptions>
-          <Link href="/create-product">
-            <NavOptions className="d-none d-md-flex cursor-pointer">
-              <Plus />
+          <NavOptions>
+            <Search onClick={handleShowSearch} />
+          </NavOptions>
+        </div>
+        <div className="col-4">
+          <NavLogo />
+        </div>
+
+        {/* right nav */}
+        <div className="col-4">
+          <NavRight>
+            <NavOptions onClick={handleShowNav}>
+              <MenuAlt1 />
               <div className="d-md-flex d-none flex-column">
                 <NavFirstOption>
-                  <small>Add</small>
+                  <small>Watching</small>
                 </NavFirstOption>
                 <NavSecondOption>
-                  <small>Product</small>
+                  23 <small className="">items</small>
                 </NavSecondOption>
               </div>
             </NavOptions>
-          </Link>
-        </NavRight>
+            <Link href="/create-product">
+              <NavOptions className="d-none d-md-flex cursor-pointer">
+                <Plus />
+                <div className="d-md-flex d-none flex-column">
+                  <NavFirstOption>
+                    <small>Add</small>
+                  </NavFirstOption>
+                  <NavSecondOption>
+                    <small>Product</small>
+                  </NavSecondOption>
+                </div>
+              </NavOptions>
+            </Link>
+          </NavRight>
+        </div>
       </Nav>
     </div>
   );
@@ -82,8 +103,6 @@ export default TopNav;
 const Nav = styled.div`
   background: #008339;
   // border-bottom: 1px solid black;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 10px;
 
@@ -97,6 +116,7 @@ const NavOptions = styled.div`
   position: relative;
   cursor: pointer;
   padding-left: 1rem;
+  padding-right: 1rem;
   position-relative;
   display: flex;
   align-items: flex-start;

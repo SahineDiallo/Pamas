@@ -2,43 +2,57 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import BottomNav from "../Components/Navbar/BottomNav";
 import TopNav from "../Components/Navbar/TopNav";
-import { XCircle } from "@styled-icons/feather/XCircle";
-import NavLogo from "../Components/Navbar/NavLogo";
+import { XCircle } from "@styled-icons/heroicons-outline/XCircle";
+import Login from "../Components/Login";
+import MyPamas from "../Components/MyPamas";
+import HiddenSearch from "../Components/HiddenSearch";
 import { Search } from "@styled-icons/heroicons-solid/Search";
-import {
-  selectNav,
-  hideNav,
-  hideSearch,
-  selectSearch,
-} from "../store/slices/navSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { selectNav, selectSearch } from "../store/slices/navSlice";
+import { useSelector } from "react-redux";
 import { CubeTransparent } from "@styled-icons/heroicons-outline/CubeTransparent";
 import SideNav from "./Navbar/SideNav/SideNav";
-import Link from "next/link";
-import SearchNav from "./Navbar/SearchArea";
+import { useSession } from "next-auth/react";
 
-const Navbar = () => {
-  const dispatch = useDispatch();
+const hideMask = () => {
+  const mask = document.getElementById("page-mask");
+  mask.classList.contains("d-block") && mask.classList.remove("d-block");
+};
+
+const Navbar = ({ providers }) => {
+  const { data: session } = useSession();
   const navStatus = useSelector(selectNav);
   const searchStatus = useSelector(selectSearch);
   const active = navStatus ? "active" : "";
   const searchActive = searchStatus ? "s_active" : "";
-
   useEffect(() => {
     const body = document.querySelector("body");
-    active
-      ? body.classList.add("position-fixed")
-      : body.classList.remove("position-fixed");
-  }, [active]);
+    const maskDiv = document.querySelector("#page-mask");
+    if (active || searchActive) {
+      body.classList.add("position-fixed");
+      maskDiv.classList.add("d-block");
+    } else {
+      body.classList.remove("position-fixed");
+      maskDiv.classList.remove("d-block");
+    }
+  }, [active, searchActive]);
   const handleShowNav = () => {
-    dispatch(hideNav());
+    hideMask();
+    const p_div = document.getElementById("menu");
+    p_div.classList.remove("show");
   };
   const handleShowSearch = () => {
-    dispatch(hideSearch());
+    hideMask();
+    const s_div = document.getElementById("searchDiv");
+    s_div.classList.remove("show");
+  };
+  const hideProfile = () => {
+    hideMask();
+    const p_div = document.getElementById("profile");
+    p_div.classList.remove("show");
   };
   return (
-    <Nav className="sticky-top entire-nav">
-      <HiddenMenu className={`${active} hidden-menu`}>
+    <Nav className="sticky-top">
+      <HiddenMenu className="menu" id="menu">
         <div className="wrapper__header">
           <div className="d-flex align-items-center gap-2">
             <CubeTransparent />
@@ -48,10 +62,9 @@ const Navbar = () => {
             <XCircle />
           </div>
         </div>
-        <SearchNav />
         <SideNav />
       </HiddenMenu>
-      <HiddenSearchDiv className={`${searchActive}`}>
+      <HiddenSearchDiv className="searchDiv" id="searchDiv">
         <div className="wrapper__header">
           <div className="d-flex align-items-center gap-2">
             <Search />
@@ -61,8 +74,22 @@ const Navbar = () => {
             <XCircle />
           </div>
         </div>
-        <p> search by wahtever you wnat</p>
+        <div className="p-3">
+          <HiddenSearch />
+        </div>
       </HiddenSearchDiv>
+      <div className="profile" id="profile">
+        <div className="wrapper__header">
+          <div className="d-flex align-items-center gap-2">
+            <CubeTransparent />
+            <h6 className="mb-0">My Pamas Zone</h6>
+          </div>
+          <div className="close_x" onClick={hideProfile}>
+            <XCircle />
+          </div>
+        </div>
+        {!session ? <Login providers={providers} /> : <MyPamas />}
+      </div>
       <TopNav />
       <BottomNav />
     </Nav>
@@ -79,14 +106,16 @@ const Nav = styled.div`
   }
 `;
 const HiddenMenu = styled.div`
-  position: absolute;
+  position: fixed;
   top: 64px;
   width: 100%;
+  max-width: 350px;
   height: calc(100vh - 64px);
   background: white;
-  left: 0;
+  right: 0;
   z-index: 99;
-  transition: all ease-in .4s;
+  transition: all ease-in .3s;
+  transform: translateX(100%);
   overflow-y: auto;
   .wrapper__header {
     color: white;
@@ -111,14 +140,16 @@ const HiddenMenu = styled.div`
 }
 `;
 const HiddenSearchDiv = styled.div`
-  position: absolute;
+  position: fixed;
   top: 64px;
   width: 100%;
-  height: 0;
+  max-width: 350px;
+  height: calc(100vh - 64px);
   background: white;
-  right: 0;
+  left: 0;
   z-index: 89;
-  transition: all ease-in 0.4s;
+  transition: all ease-in 0.3s;
+  transform: translateX(-100%);
   overflow-y: auto;
   .wrapper__header {
     color: white;

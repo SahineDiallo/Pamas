@@ -5,6 +5,11 @@ const ProductSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  user: {
+    type: mongoose.Types.ObjectId,
+    ref: "user",
+    required: true,
+  },
   description: {
     type: String,
     required: true,
@@ -19,6 +24,7 @@ const ProductSchema = new mongoose.Schema({
   },
   subCategory: {
     type: String,
+    default: null,
   },
   specifications: {
     processor: String,
@@ -33,8 +39,9 @@ const ProductSchema = new mongoose.Schema({
     required: true,
   },
   images: {
-    type: Array,
+    type: [String],
     required: true,
+    validate: [arrayLimit, "No outputs"],
   },
   createdAt: {
     type: Date,
@@ -46,6 +53,10 @@ const ProductSchema = new mongoose.Schema({
     default: () => Date.now(),
   },
 });
+function arrayLimit(val) {
+  console.log("array value", val);
+  return (val.length = 4);
+}
 
 module.exports =
   mongoose.models.Product || mongoose.model("Product", ProductSchema);
