@@ -14,9 +14,9 @@ const Products = () => {
           {Object.entries(products)
             .slice(0, 2)
             .map(
-              (product) =>
+              (product, idx) =>
                 product && (
-                  <div className="last__collections">
+                  <div className="last__collections" key={idx}>
                     <div className="main__img">
                       <img src={product[1][0]?.images[0]} alt="" />
                     </div>

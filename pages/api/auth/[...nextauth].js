@@ -18,12 +18,26 @@ export default NextAuth({
   ],
   secret: process.env.JWT_SECRET,
   pages: {
-    // signIn: '/signin',
+    signIn: "/accounts/login",
   },
+  // jwt: {
+  //   encryption: true,
+  // },
   callbacks: {
     session: async ({ session, user }) => {
       session.userId = user.id;
       return session;
     },
   },
+
+  //   async jwt(token, account, user) {
+  //     console.log("user from ...nextauth", user);
+  //     console.log("token", token);
+  //     console.log("logged in account", account);
+  //     if (account?.accessToken) {
+  //       token.accessToken = account.accessToken;
+  //     }
+  //     return token;
+  //   },
+  // },
 });

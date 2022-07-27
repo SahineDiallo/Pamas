@@ -2,50 +2,19 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { Formik, Form, Field, FieldArray } from "formik";
-import { getProviders, useSession } from "next-auth/react";
-import * as Yup from "yup";
-import FieldImage from "../Components/FieldImage";
-import SpecFieldInput from "../Components/SpecFieldInput";
-import SpecFieldSelect from "../Components/SpecFieldSelect";
+import { getProviders, getSession, useSession } from "next-auth/react";
+import FieldImage from "../../Components/FieldImage";
+import SpecFieldInput from "../../Components/SpecFieldInput";
+import SpecFieldSelect from "../../Components/SpecFieldSelect";
+import { disableAll, ProductSchema, removeDisable } from "../../utils/utils";
 
-const ProductSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(5, "The product name should be more than 5 characters!")
-    .required("Please enter the name of the product"),
-  price: Yup.number("the product price should a positive number")
-    .required("Please enter the product price")
-    .min(10),
-  description: Yup.string().required("Please give the product description"),
-  category: Yup.string().required("Please select a category"),
-  images: Yup.array()
-    .of(
-      Yup.object().shape({
-        name: Yup.string().trim().required("Please provide the image name"),
-        _value: Yup.string().trim().required("Please provide the image value"),
-      })
-    )
-    .min(1, "You should upload at least one image")
-    .max(4, "The  max product image is 4"),
-
-  specifications: Yup.mixed().when(["category"], {
-    is: (category) => {
-      return category === "Computer and Laptop";
-    },
-    then: Yup.array()
-      .of(
-        Yup.object().shape({
-          name: Yup.string().trim().required("Please provide the image name"),
-          _value: Yup.string().trim().required("This field is required"),
-        })
-      )
-      .min(6),
-  }),
-});
 const initialValues = {
   name: "",
   price: "",
   description: "",
   category: "",
+  subCategory: "",
+  color: "",
   images: [{ name: "p_mainImag", _value: "" }],
   specifications: [
     { name: "processor", _value: "" },
@@ -71,31 +40,11 @@ const selectOptions = {
   brand: ["Apple Product", "HP", "ACER", "Toshiba", "Other"],
 };
 
-const allInputsAndSelects = (divClass) => {
-  const div = document.querySelector(`.${divClass}`);
-  const inputs = div.getElementsByTagName("input");
-  const selects = div.getElementsByTagName("select");
-  return Array.prototype.slice
-    .call(inputs)
-    .concat(Array.prototype.slice.call(selects));
-};
-const disableAll = (divClass) => {
-  const elmts = allInputsAndSelects(divClass);
-  elmts.forEach((el) => {
-    el.setAttribute("disabled", "");
-  });
-};
-const removeDisable = (divClass) => {
-  const elmts = allInputsAndSelects(divClass);
-  elmts.forEach((el) => {
-    el.removeAttribute("disabled");
-  });
-};
-
 const addProduct = ({ providers }) => {
   let imageIdx;
   const [showSpecs, setShowSpecs] = useState(false);
   const { data: session } = useSession();
+
   const subCat = {
     Option1: ["Men", "Women"],
     Option2: ["Computer/Laptop", "phone", "other"],
@@ -125,46 +74,27 @@ const addProduct = ({ providers }) => {
 
   // get the user session id;
   const handleSubmit = async (values) => {
-    console.log(values);
+    values["user"] = session.userId;
+    // need to add the color or validate
     const formdata = new FormData();
-    // const fileInputs = document.querySelectorAll(".p_img");
-    // fileInputs.forEach((fileInput) => {
-    //   console.log(fileInput);
-    //   formdata.append(fileInput["name"], fileInput.files[0]);
-    // });
-    const selectedCat = document.getElementById("category").value;
-    const dataSpecs =
-      selectedCat === "Computer and Laptop"
-        ? {
-            processor: document.getElementById("processor").value,
-            battery: parseInt(document.getElementById("battery").value),
-            status: document.getElementById("status").value,
-            system: document.getElementById("system").value,
-            ram: parseInt(document.getElementById("ram").value),
-            brand: document.getElementById("brand").value,
-          }
-        : null;
-    const subCat =
-      selectedCat !== "Mobile" && selectedCat !== "Television"
-        ? document.getElementById("subCategory").value
-        : "";
-
-    //the product body to send to the backend
-    const product_data = {
-      name: document.getElementById("name").value.trim(),
-      description: document.getElementById("description").value,
-      price: parseInt(document.getElementById("price").value),
-      category: document.getElementById("category").value,
-      color: document.querySelector('input[name="color"]:checked').value,
-      specifications: dataSpecs,
-      subCategory: subCat,
-      user: session.userId,
-    };
+    Array.from(document.querySelectorAll(".p_img")).map((input, idx) => {
+      console.log(input.files);
+      formdata.append(`${values.images[idx].name}`, input.files[0]);
+    });
+    
+    console.log("this is the form data", formdata);
     formdata.append("data", JSON.stringify(values));
+    for (var pair of formdata.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
+
     const config = {
-      headers: { "Content-type": "multipart/form-data" },
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     };
     const { data } = await axios.post("/api/createProduct", formdata, config);
+    console.log(data);
   };
   return (
     <>
@@ -221,10 +151,13 @@ const addProduct = ({ providers }) => {
                         </label>
                         <Field
                           as="select"
-                          name="pSubCategory"
-                          className="form-select"
+                          name="subCategory"
+                          className={
+                            errors.subCategory && touched.subCategory
+                              ? "form-select is-invalid"
+                              : "form-select"
+                          }
                           id="subCategory"
-                          aria-label="Default select example"
                         >
                           {subCatOptions.map((opt, optIdx) => (
                             <option key={optIdx} value={opt}>
@@ -392,7 +325,7 @@ const addProduct = ({ providers }) => {
                               imageIdx = idx;
                               return (
                                 <div
-                                  className="d-flex align-items-center gap-2"
+                                  className="d-flex align-items-end gap-2"
                                   key={idx}
                                 >
                                   <FieldImage
@@ -404,7 +337,7 @@ const addProduct = ({ providers }) => {
                                   />
                                   {idx !== 0 && (
                                     <button
-                                      className="btn btn-outline-danger"
+                                      className="btn btn-outline-danger btn-sm"
                                       onClick={() => remove(`idx`)}
                                       type="button"
                                     >

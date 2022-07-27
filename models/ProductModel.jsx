@@ -27,12 +27,15 @@ const ProductSchema = new mongoose.Schema({
     default: null,
   },
   specifications: {
-    processor: String,
-    battery: Number,
-    status: String,
-    system: String,
-    ram: Number,
-    brand: String,
+    type: {
+      processor: String,
+      battery: Number,
+      status: String,
+      system: String,
+      ram: Number,
+      brand: String,
+    },
+    required: false,
   },
   price: {
     type: Number,

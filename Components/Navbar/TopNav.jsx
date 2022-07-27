@@ -7,6 +7,7 @@ import Link from "next/link";
 import { MenuAlt1 } from "@styled-icons/heroicons-solid/MenuAlt1";
 import { Search } from "@styled-icons/heroicons-solid/Search";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const showMask = () => {
   const mask = document.getElementById("page-mask");
@@ -14,6 +15,7 @@ const showMask = () => {
 };
 const TopNav = () => {
   const { data: session } = useSession();
+  const router = useRouter();
   const handleShowNav = () => {
     const div = document.getElementById("menu");
     const p_div = document.getElementById("profile");
@@ -41,11 +43,20 @@ const TopNav = () => {
     p_div.classList.add("show");
     showMask();
   };
+  const handleLogin = () => {
+    !session
+      ? document.getElementById("loginDiv").click()
+      : router.push("/products/create-product");
+  };
   return (
     <div>
       <Nav className="mb-0 text-white row mx-0">
         <div className="nav-left d-flex align-items-center col-4">
-          <NavOptions className="d-none d-md-flex" onClick={handleShowProfile}>
+          <NavOptions
+            className="d-none d-md-flex"
+            onClick={handleShowProfile}
+            id="loginDiv"
+          >
             <User />
             <div className="ml-3">
               <NavFirstOption>
@@ -78,19 +89,20 @@ const TopNav = () => {
                 </NavSecondOption>
               </div>
             </NavOptions>
-            <Link href="/create-product">
-              <NavOptions className="d-none d-md-flex cursor-pointer">
-                <Plus />
-                <div className="d-md-flex d-none flex-column">
-                  <NavFirstOption>
-                    <small>Add</small>
-                  </NavFirstOption>
-                  <NavSecondOption>
-                    <small>Product</small>
-                  </NavSecondOption>
-                </div>
-              </NavOptions>
-            </Link>
+            <NavOptions
+              className="d-none d-md-flex cursor-pointer"
+              onClick={handleLogin}
+            >
+              <Plus />
+              <div className="d-md-flex d-none flex-column">
+                <NavFirstOption>
+                  <small>Add</small>
+                </NavFirstOption>
+                <NavSecondOption>
+                  <small>Product</small>
+                </NavSecondOption>
+              </div>
+            </NavOptions>
           </NavRight>
         </div>
       </Nav>

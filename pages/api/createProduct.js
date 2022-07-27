@@ -5,25 +5,26 @@ import sharp from "sharp";
 import streamifier from "streamifier";
 import cloudinary from "../../utils/Cloudinary";
 import Product from "../../models/ProductModel";
-import validate from "./_middleware/middleware";
+import middleware from "../_middleware";
 import { getSession } from "next-auth/react";
 
 const uploadFile = async (thumbnail) => {
-  // return new Promise((resolve, reject) => {
-  //   let stream = cloudinary.uploader.upload_stream((error, result) => {
-  //     if (result) {
-  //       const { secure_url } = result;
-  //       resolve(secure_url);
-  //     } else {
-  //       console.log("we got an error error", error);
-  //       reject(error);
-  //     }
-  //   });
+  console.log("the upload function ran");
+  return new Promise((resolve, reject) => {
+    let stream = cloudinary.uploader.upload_stream((error, result) => {
+      if (result) {
+        const { secure_url } = result;
+        resolve(secure_url);
+      } else {
+        console.log("we got an error while  uploading file", error);
+        reject(error);
+      }
+    });
 
-  //   streamifier.createReadStream(thumbnail.buffer).pipe(stream);
-  // });
+    streamifier.createReadStream(thumbnail.buffer).pipe(stream);
+  });
   // Need to identify the images before uploads
-  return "new url";
+  // return "new url";
 };
 //multer configuration
 const uploads = multer({
@@ -44,17 +45,18 @@ const apiRoute = nextConnect({
   },
 });
 const uploadMiddleware = uploads.fields([
-  { name: "images.0._value", maxCount: 1 },
-  { name: "images.1._value", maxCount: 1 },
-  { name: "images.2._value", maxCount: 1 },
-  { name: "images.3._value", maxCount: 1 },
+  { name: "p_mainImag", maxCount: 1 },
+  { name: "p_img0", maxCount: 1 },
+  { name: "p_img1", maxCount: 1 },
+  { name: "p_img2", maxCount: 1 },
 ]);
 // Adds the middleware to Next-Connect
+// apiRoute.use(middleware);
 apiRoute.use(uploadMiddleware);
-apiRoute.use(validate);
 
 // Process a POST request
 apiRoute.post(async (req, res) => {
+  console.log("request files here", req.body);
   dbConnect();
   try {
     const imagesUrl = [];
@@ -77,6 +79,7 @@ apiRoute.post(async (req, res) => {
     );
     const product_data = JSON.parse(req.body.data);
     product_data["images"] = imagesUrl;
+    console.log(product_data);
 
     //get the current user
 
@@ -91,8 +94,8 @@ apiRoute.post(async (req, res) => {
       images,
     } = product_data;
 
-    const created_product = await Product.create(product_data);
-    return res.status(200).json({ data: "success", product: created_product });
+    // const created_product = await Product.create(product_data);
+    return res.status(200).json({ data: "success", product: "ok for now" });
   } catch (error) {
     console.log("error from sharp images", error);
   }
